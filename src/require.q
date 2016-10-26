@@ -1,15 +1,12 @@
 / Author: David Strachan
 
-// TODO: Should we use the util library here or keep it raw so we can load this straight into q.q without any
-// additional dependencies?
-
 /////////////
 // PRIVATE //
 /////////////
 
 // TODO: Change .require.priv.loaded a table
 
-.require.priv.isInitialized:0b
+.require.priv.qRoot:.require.priv.cRoot:system$["w"=first string .z.o;"cd";"pwd"]
 
 ///
 // Builds a file path from a given file and a root directory
@@ -61,28 +58,29 @@
 ////////////
 
 ///
-// Configures require library by setting library root directory
-// @param qLibraryRoot string Path to root of q library directory
-// @param cLibraryRoot string Path to root of C library directory
-.require.init:{[qLibraryRoot;cLibraryRoot]
-  .require.priv.qRoot:(),qLibraryRoot;
-  .require.priv.cRoot:(),cLibraryRoot;
-  .require.priv.loaded:();
-  .require.priv.isInitialized:1b;
+// Sets the root directory for loading q libraries
+// @param root string Root directory
+.require.setQRoot:{[root]
+  .require.priv.qRoot:(),root;
+  }
+
+///
+// Sets the root directory for loading C libraries
+// @param root string Root directory
+.require.setCRoot:{[root]
+  .require.priv.cRoot:(),root;
   }
 
 ///
 // Loads the specified library located in the root directory, only if not previously loaded
 // @param lib string/mixedList List of libraries to load from root
 .require.loadLib:{[lib]
-  if[not .require.priv.isInitialized;:0b];
   .require.priv.loadLib[lib;0b]}
 
 ///
 // Loads the specified library located in the root directory, even if previously loaded
 // @param lib string/mixedList List of libraries to load from root
 .require.forceLoadLib:{[lib]
-  if[not .require.priv.isInitialized;:0b];
   .require.priv.loadLib[lib;1b]}
 
 ///
@@ -92,7 +90,6 @@
 // @param namespace symbol Namespace used to hold loaded function
 // @param lib symbol Shared object filename (excluding .so/.dll extension)
 .require.loadFunction:{[func;argCount;namespace;lib]
-  if[not .require.priv.isInitialized;:0b];
   .require.priv.loadC[func;argCount;namespace;lib]}
 
 ///
