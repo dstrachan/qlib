@@ -71,6 +71,19 @@
 .util.isTable:{[val]
   98=type val}
 
+///
+// Casts a value to the given type
+// @param typ symbol/char Type name
+// @param val any Value to cast
+.util.cast:{[typ;val]
+  if[.util.isType[typ;val];:val];
+  // TODO: .util.stringify?
+  if[`string=typ;:string val];
+  // TODO: Should we let the user handle the implications of trying to cast bad data?
+  // Is 'cast a confusing error?  Maybe we should use '.util.cast
+  .[$;(typ;val);{'`cast}]}
+
+
 /*********************/
 / String manipulation /
 /*********************/
