@@ -14,9 +14,9 @@
 // PUBLIC //
 ////////////
 
-/***********************/
-/ File system functions /
-/***********************/
+/*************/
+/ File system /
+/*************/
 
 ///
 // Checks if a given directory exists
@@ -30,9 +30,9 @@
 .util.isFile:{[file]
   file~key file:hsym file}
 
-/*************************/
-/ Type checking functions /
-/*************************/
+/***************/
+/ Type checking /
+/***************/
 
 ///
 // Checks if a given value is of the specified type(s)
@@ -70,3 +70,20 @@
 // @param val any Value to be checked
 .util.isTable:{[val]
   98=type val}
+
+/*********************/
+/ String manipulation /
+/*********************/
+
+///
+// Recursively stringify any given data
+// @param list any List of values to stringify
+.util.stringify:{[list]
+  res:$[.util.isType[`string;list];list;
+    97<type list;"\n",.Q.s list;
+    .util.isList[list];"¬"sv .z.s@'list;
+    string list];
+
+  // TODO: Fix this hack, find alternative to "¬"
+  res:ssr[;"¬";" "]ssr[;"\n";"\n "]ssr[res;"\n¬";"\n"];
+  res}
