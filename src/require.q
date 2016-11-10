@@ -6,6 +6,9 @@
 
 // TODO: Change .require.priv.loaded a table
 
+.require.priv.loaded:enlist()
+.require.priv.loadedC:enlist()
+
 .require.priv.qRoot:.require.priv.cRoot:system$["w"=first string .z.o;"cd";"pwd"]
 
 ///
