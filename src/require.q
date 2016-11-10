@@ -73,13 +73,13 @@
 
 ///
 // Loads the specified library located in the root directory, only if not previously loaded
-// @param lib string/mixedList List of libraries to load from root
+// @param lib string Library to load from root
 .require.loadLib:{[lib]
   .require.priv.loadLib[lib;0b]}
 
 ///
 // Loads the specified library located in the root directory, even if previously loaded
-// @param lib string/mixedList List of libraries to load from root
+// @param lib string Library to load from root
 .require.forceLoadLib:{[lib]
   .require.priv.loadLib[lib;1b]}
 
