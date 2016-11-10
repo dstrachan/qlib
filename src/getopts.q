@@ -4,9 +4,11 @@
 // PRIVATE //
 /////////////
 
-.getopts.priv.defaults:()!()
+// TODO: Disallow duplicate required/optional argument names
+
+.getopts.priv.defaults:(enlist`help)!enlist enlist@'("";"show this message and exit")
 .getopts.priv.required:()
-.getopts.priv.optional:()
+.getopts.priv.optional:enlist`help
 
 ///
 // Adds an excepted command line argument with a specified default value and help message
@@ -118,6 +120,3 @@
 .getopts.parseArgs:{[]
   res:.getopts.priv.parseArgs[];
   res}
-
-// TODO: Removg
-.getopts.addOpt[`help;"";"show this message and exit"]
