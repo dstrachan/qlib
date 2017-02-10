@@ -11,15 +11,15 @@
 .getopts.priv.optional:enlist`help
 
 ///
-// Adds an excepted command line argument with a specified default value and help message
+// Adds an expected command line argument with a specified default value and help message
 // @param arg symbol Argument name
 // @param val any Default value for argument
 // @param help string Help message to output in usage details
 // @param required boolean Flag to indicate if argument is required
 .getopts.priv.addArg:{[arg;val;help;required]
   .getopts.priv.defaults,:(enlist arg)!enlist($[10=type val;enlist val;val];enlist help);
-  .getopts.priv.required:distinct .getopts.priv.required,$[required;enlist arg;()];
-  .getopts.priv.optional:distinct .getopts.priv.optional,$[not required;enlist arg;()];
+  .getopts.priv.required:.getopts.priv.required union$[required;enlist arg;()];
+  .getopts.priv.optional:.getopts.priv.optional union$[not required;enlist arg;()];
   }
 
 ///
