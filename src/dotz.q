@@ -1,10 +1,14 @@
 / Author: David Strachan
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// DOTZ ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////
 // PRIVATE //
 /////////////
 
-.dotz.priv.handlers1:`$".z.",/:string`ac`bm`exit`pc`pg`ph`pi`pm`pp`po`ps`ts`wc`wo`ws
+.dotz.priv.handlers1:`$".z.",/:string`ac`bm`exit`pc`pg`ph`pi`pm`po`pp`ps`ts`wc`wo`ws
 .dotz.priv.handlers2:`$".z.",/:string`pw`vs
 
 ///
@@ -28,7 +32,7 @@
   1b}
 
 ///
-// Appends a function with 2 parameters to the spcified handler
+// Appends a function with 2 parameters to the specified handler
 // @param handler symbol .z event handler
 // @param func function Function to append
 .dotz.priv.append2:{[handler;func]
