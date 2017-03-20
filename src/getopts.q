@@ -1,12 +1,16 @@
 / Author: David Strachan
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////// GETOPTS /////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// TODO: Disallow duplicate required/optional argument names
+
 /////////////
 // PRIVATE //
 /////////////
 
-// TODO: Disallow duplicate required/optional argument names
-
-.getopts.priv.defaults:(enlist`help)!enlist enlist@'("";"show this message and exit")
+.getopts.priv.defaults:enlist[`help]!enlist enlist@'("";"show this message and exit")
 .getopts.priv.required:()
 .getopts.priv.optional:enlist`help
 
@@ -17,7 +21,7 @@
 // @param help string Help message to output in usage details
 // @param required boolean Flag to indicate if argument is required
 .getopts.priv.addArg:{[arg;val;help;required]
-  .getopts.priv.defaults,:(enlist arg)!enlist($[10=type val;enlist val;val];enlist help);
+  .getopts.priv.defaults,:enlist[arg]!enlist($[10=type val;enlist val;val];enlist help);
   .getopts.priv.required:.getopts.priv.required union$[required;enlist arg;()];
   .getopts.priv.optional:.getopts.priv.optional union$[not required;enlist arg;()];
   }
@@ -26,8 +30,7 @@
 // Output usage message to stderr
 .getopts.priv.showUsage:{[]
   formatUsage:{[x;y]
-    x:" "sv'flip("-",/:x;
-    upper x:string x except`help);
+    x:" "sv'flip("-",/:x;upper x:string x except`help);
     " "sv$[y;x;"[",'x,'"]"]};
   formatArgs:{[x]
     x:-1_"\n"sv" ",/:"\n"vs .Q.s(`$"-",/:string x)!`$last@'.getopts.priv.defaults x;
@@ -63,7 +66,7 @@
 .getopts.priv.showAdditionalArgs:{[]
   output:(50#"-"),"\n\n";
   output,:"error: additional arguments provided\n";
-  output,:raze" -",/:(string(key .Q.opt .z.x)except .getopts.priv.required union .getopts.priv.optional),\:"\n";
+  output,:raze" -",/:(string key[.Q.opt .z.x]except .getopts.priv.required union .getopts.priv.optional),\:"\n";
   -2 output;
   }
 
@@ -79,7 +82,7 @@
   if[not all provided:.getopts.priv.required in key cmdline;
     missingArgs:1b];
 
-  if[count(key cmdline)except .getopts.priv.required union .getopts.priv.optional;
+  if[count key[cmdline]except .getopts.priv.required union .getopts.priv.optional;
     additionalArgs:1b];
 
   if[missingArgs or additionalArgs;
