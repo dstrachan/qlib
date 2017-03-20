@@ -1,5 +1,9 @@
 / Author: David Strachan
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// UTIL ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /////////////
 // PRIVATE //
 /////////////
@@ -39,7 +43,7 @@
 // @param typeList symbol/symbolList List of types to be checked against
 // @param val any Value to be compared against typeList
 .util.isType:{[typeList;val]
-  any(.util.priv.typeDict typeList)=/:type val}
+  any .util.priv.typeDict[typeList]=/:type val}
 
 ///
 // Checks if a given list of variable names exists in the global namespace
@@ -77,16 +81,14 @@
 // @param val any Value to cast
 .util.cast:{[typ;val]
   if[.util.isType[typ;val];:val];
-  // TODO: .util.stringify?
   if[`string=typ;:string val];
   // TODO: Should we let the user handle the implications of trying to cast bad data?
   // Is 'cast a confusing error?  Maybe we should use '.util.cast
   .[$;(typ;val);{'`cast}]}
 
-
-/*********************/
-/ String manipulation /
-/*********************/
+/***************/
+/ Miscellaneous /
+/***************/
 
 ///
 // Recursively stringify any given data
@@ -100,3 +102,15 @@
   // TODO: Fix this hack, find alternative to "¬"
   res:ssr[;"¬";" "]ssr[;"\n";"\n "]ssr[res;"\n¬";"\n"];
   res}
+
+///
+// Formats a number to 2 decimal places with grouped thousands
+// @param num int/long/float Number to be formatted
+.util.formatNumber:{[number]
+  ssr[;".00";""](reverse","sv 3 cut reverse first a),".",last a:"."vs .Q.f[2;number]}
+
+///
+// Formats a number into the best byte representation (KB/MB/GB)
+// @param bytes int/long/float Bytes to be formatted
+.util.formatBytes:{[bytes]
+  " "vs@[;0;.util.formatNumber]$[1024>bytes%:1024;(bytes;"KB");1024>bytes%:1024;(bytes;"MB");(bytes%1024;"GB")]}
