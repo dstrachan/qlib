@@ -1,0 +1,3 @@
+[submodule "qdotz"]
+	path = qdotz
+	url = git@github.com:dstrachan/qdotz.git
