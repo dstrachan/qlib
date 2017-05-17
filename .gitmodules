@@ -1,3 +1,6 @@
 [submodule "qdotz"]
 	path = qdotz
 	url = git@github.com:dstrachan/qdotz.git
+[submodule "qtimer"]
+	path = qtimer
+	url = git@github.com:dstrachan/qtimer.git
